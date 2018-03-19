@@ -21,9 +21,17 @@ fi
 #----------------------------------------------------------
 #以下自动检测kubernetes中是否存在相应的pv，pvc和rc，若不存在则主动创建
 #---------------------------------------------------------
+#NAME                CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS    CLAIM                        STORAGECLASS     REASON    AGE
+#pv-mysql            5Gi        RWX            Retain           Bound     default/pvc-mysql                                       9m
+#------------------------------------------------------------------------------------------------------------------------------------
+#NAME                 STATUS    VOLUME              CAPACITY   ACCESS MODES   STORAGECLASS     AGE
+#pvc-mysql            Bound     pv-mysql            5Gi        RWX                             9m
+#-------------------------------------------------------------------------------------------------------------------------------------
+#NAME           DESIRED   CURRENT   READY     AGE
+#iotdb-master   1         1         1         20d
 if [ -e ${pv} -a -e ${pvc} -a -e ${rc} ]; then
   var=`kubectl get pv | grep ${param_pv}`
-  if [ -z ${var[0]} ]; then
+  if [ ${#var[0]} == 0 ]; then
     echo There is no PV like \"${param_pv}\", need to create a new PV;
     kubectl create -f ${pv}
     echo A new PV created
@@ -32,7 +40,7 @@ if [ -e ${pv} -a -e ${pvc} -a -e ${rc} ]; then
     echo ${var[0]}
   fi
   var=`kubectl get pvc | grep ${param_pvc}`
-  if [ -z ${var[0]} ]; then
+  if [ ${#var[0]} == 0 ]; then
     echo There is no PVC like \"${param_pvc}\", need to create a new one;
     kubectl create -f ${pvc}
     echo A new PVC created
@@ -41,7 +49,7 @@ if [ -e ${pv} -a -e ${pvc} -a -e ${rc} ]; then
     echo ${var[0]}
   fi
   var=`kubectl get rc | grep ${param_rc}`
-  if [ -z ${var[0]} ]; then
+  if [ ${#var[0]} == 0 ]; then
     echo There is no ReplicationController like \"${param_rc}\", need to create new one;
     kubectl create -f ${rc}
     echo A new ReplicationController created
