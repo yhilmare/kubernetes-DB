@@ -1,0 +1,21 @@
+kind: ReplicationController
+apiVersion: v1
+metadata:
+ name: neo4j-coreserver-rc
+ labels:
+  target: neo4j-cs
+spec:
+ selector:
+  name: neo4j-coreserver
+ replicas: 3
+ template:
+  metadata:
+   labels:
+    name: neo4j-coreserver
+    type: core-server
+  spec:
+   containers:
+    - name: neo4j-cs
+      image: neo4j:enterprise
+      imagePullPolicy: IfNotPresent
+      env:
