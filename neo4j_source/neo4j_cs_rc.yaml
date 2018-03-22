@@ -7,7 +7,7 @@ metadata:
 spec:
  selector:
   name: neo4j-coreserver
- replicas: 3
+ replicas: 1
  template:
   metadata:
    labels:
@@ -19,3 +19,9 @@ spec:
       image: neo4j:enterprise
       imagePullPolicy: IfNotPresent
       env:
+       - name: NEO4J_dbms_mode
+         value: CORE
+       - name: NEO4J_causal__clustering_expected__core__cluster__size
+         value: 1
+       - name: NEO4J_causal__clustering_initial__discovery__members
+         value: 
