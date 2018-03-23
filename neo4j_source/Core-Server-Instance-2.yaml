@@ -1,0 +1,38 @@
+kind: Pod 
+apiVersion: v1 
+metadata: 
+ name: neo4j-1 
+ labels: 
+  app: neo4j 
+spec: 
+ hostNetwork: true 
+ nodeSelector: 
+  neo_name: node3 
+ containers: 
+  - name: neo4j 
+    image: neo4j:enterprise 
+    imagePullPolicy: IfNotPresent
+    ports: 
+     - containerPort: 7474 
+     - containerPort: 7473 
+     - containerPort: 7687 
+     - containerPort: 5000 
+     - containerPort: 6000 
+     - containerPort: 7000 
+    env: 
+     - name: NEO4J_dbms_mode 
+       value: "CORE" 
+     - name: NEO4J_causal__clustering_expected__core__cluster__size 
+       value: "2" 
+     - name: NEO4J_causal__clustering_initial__discovery__members 
+       value: "172.19.0.134:5000,172.19.0.133:5000" 
+     - name: NEO4J_causal__clustering_discovery__advertised__address 
+       value: "172.19.0.133:5000" 
+     - name: NEO4J_causal__clustering_transaction__advertised__address 
+       value: "172.19.0.133:6000" 
+     - name: NEO4J_causal__clustering_raft__advertised__address 
+       value: "172.19.0.133:7000" 
+     - name: NEO4J_dbms_connectors_default__advertised__address 
+       value: "172.19.0.133" 
+     - name: NEO4J_ACCEPT_LICENSE_AGREEMENT 
+       value: "yes"

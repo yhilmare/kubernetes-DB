@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+ name: neo4j-svc
+ labels:
+  type: core-server
+spec:
+ selector:
+  app: neo4j
+ type: NodePort
+ ports:
+  - name: http
+    port: 7474
+    nodePort: 31234
+    targetPort: 7474
