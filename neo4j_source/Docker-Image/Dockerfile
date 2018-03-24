@@ -1,22 +1,15 @@
 FROM openjdk:8-jre-alpine
 
-MAINTAINER ILMARE "yh_swjtu@163.com"
-
 RUN apk add --no-cache --quiet \
     bash \
     curl
 
-ENV NEO4J_SHA256=62914134ce50cbb251bb70ef9311516808c5278412aade1a13c03239a0c18214 \
-    NEO4J_TARBALL=neo4j-enterprise-3.3.0-unix.tar.gz \
+ENV NEO4J_SHA256=6901832c63bb3d9af150a1c3da3a88a4d15ad4b4a130611df138648d4c25f1a8 \
+    NEO4J_TARBALL=neo4j-enterprise-3.3.3-unix.tar.gz \
     NEO4J_EDITION=enterprise
-
-ARG NEO4J_URI=http://dist.neo4j.org/neo4j-enterprise-3.3.0-unix.tar.gz
-
-RUN mkdir -p /initshell
+ARG NEO4J_URI=http://dist.neo4j.org/neo4j-enterprise-3.3.3-unix.tar.gz
 
 COPY ./local-package/* /tmp/
-
-COPY ./run.sh /initshell/
 
 RUN curl --fail --silent --show-error --location --remote-name ${NEO4J_URI} \
     && echo "${NEO4J_SHA256}  ${NEO4J_TARBALL}" | sha256sum -csw - \
@@ -27,13 +20,20 @@ RUN curl --fail --silent --show-error --location --remote-name ${NEO4J_URI} \
     && ln -s /data /var/lib/neo4j/data \
     && apk del curl
 
+ENV PATH /var/lib/neo4j/bin:$PATH
+
 WORKDIR /var/lib/neo4j
 
 VOLUME /data
 
+RUN mkdir -p /initdir
+
 COPY docker-entrypoint.sh /docker-entrypoint.sh
+
+COPY run.sh /run.sh
 
 EXPOSE 7474 7473 7687
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/run.sh"]
+
 CMD ["neo4j"]
