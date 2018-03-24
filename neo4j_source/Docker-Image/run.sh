@@ -26,8 +26,11 @@ for line in `cat /etc/hosts`; do
   fi
   ipAddress=${line}
 done
-echo "${ipAddress}" >> ${volumeDir}${volumeFile}
-echo `date` "[INFO] - the host named \"${hostname}\"'s ip \"${ipAddress}\" has been written into hosts.data."
+
+if [ ${#NEO4J_causal__clustering_expected__core__cluster__size} != 0 ]; then
+  echo "${ipAddress}" >> ${volumeDir}${volumeFile}
+  echo `date` "[INFO] - the host named \"${hostname}\"'s ip \"${ipAddress}\" has been written into hosts.data."
+fi
 
 #根据环境变量NEO4J_causal__clustering_expected__core__cluster__size找出全部需要的目标ip地址
 
@@ -53,13 +56,31 @@ while :; do
   parseFile ${volumeDir}${volumeFile}
   if [ ${#NEO4J_causal__clustering_expected__core__cluster__size} == 0 ]; then
     echo `date` "[WARNING] - env \"NEO4J_causal__clustering_expected__core__cluster__size\" has not been set."
-    exit 0
+    if [ ${#MY_NEO4J_INIT_MEMBER_LIST} == 0 ]; then
+      echo `date` "[ERROR] - leaking parameters."
+      exit 1
+    elif [ ${#ip_array[@]} -ge ${MY_NEO4J_INIT_MEMBER_LIST} ]; then
+      echo `date` "[INFO] - fetching cluster member list for slave node..."
+      count=${#ip_array[@]}
+      for ((i=0;i<${MY_NEO4J_INIT_MEMBER_LIST};i++)); do
+        tmp_array[${i}]=${ip_array[$[count-i-1]]}
+      done
+      unset ip_array
+      ip_array=${tmp_array[*]}
+      break
+    fi
   elif [ ${#ip_array[@]} == ${NEO4J_causal__clustering_expected__core__cluster__size} ]; then
     echo `date` "[INFO] - fetched the initial cluster members."
     break
   elif [ ${#ip_array[@]} -gt ${NEO4J_causal__clustering_expected__core__cluster__size} ]; then
-    echo `date` "[ERROR] - fatal error occured!"
-    exit 1
+    echo `date` "[WARNING] - too many items, fetch the latest items!"
+    count=${#ip_array[@]}
+    for ((i=0;i<${NEO4J_causal__clustering_expected__core__cluster__size};i++)); do
+      tmp_array[${i}]=${ip_array[$[count-i-1]]}
+    done
+    unset ip_array
+    ip_array=${tmp_array[*]}
+    break
   fi
 done
 
