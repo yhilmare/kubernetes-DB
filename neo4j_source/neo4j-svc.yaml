@@ -13,11 +13,3 @@ spec:
     port: 7474
     nodePort: 32474
     targetPort: 7474
-  - name: https
-    port: 7473
-    nodePort: 32473
-    targetPort: 7473
-  - name: bolt
-    port: 7687
-    nodePort: 32687
-    targetPort: 7687

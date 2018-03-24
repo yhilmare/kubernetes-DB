@@ -1,35 +1,42 @@
-kind: Pod
+kind: ReplicationController
 apiVersion: v1
 metadata:
- name: neo4j-rr
- labels:
-  name: neo4j-rr
-  app: neo4j
+ name: neo4j-rr-rc
 spec:
- volumes:
-  - name: volume-cluster
-    hostPath:
-     path: /home/yanghang/initdir
- nodeSelector:
-  neo_name: node4
- containers:
-  - name: neo4j
-    image: neo4j:enterprise
-    imagePullPolicy: IfNotPresent
-    ports:
-     - containerPort: 7474
-     - containerPort: 7473
-     - containerPort: 7687
-     - containerPort: 5000
-     - containerPort: 6000
-     - containerPort: 7000
-    env:
-     - name: NEO4J_dbms_mode
-       value: "READ_REPLICA"
-     - name: MY_NEO4J_INIT_MEMBER_LIST
-       value: "3"
-     - name: NEO4J_ACCEPT_LICENSE_AGREEMENT
-       value: "yes"
-    volumeMounts:
-     - name: volume-cluster
-       mountPath: /initdir
+ replicas: 1
+ selector:
+  name: neo4j-rr
+ template:
+  metadata:
+   name: neo4j-rr
+   labels:
+    name: neo4j-rr
+    app: neo4j
+  spec:
+   volumes:
+    - name: volume-cluster
+      hostPath:
+       path: /home/yanghang/initdir
+   nodeSelector:
+    neo_name: node4
+   containers:
+    - name: neo4j
+      image: ilmare/neo4j:enterprise
+      imagePullPolicy: IfNotPresent
+      ports:
+       - containerPort: 7474
+       - containerPort: 7473
+       - containerPort: 7687
+       - containerPort: 5000
+       - containerPort: 6000
+       - containerPort: 7000
+      env:
+       - name: NEO4J_dbms_mode
+         value: "READ_REPLICA"
+       - name: MY_NEO4J_INIT_MEMBER_LIST
+         value: "3"
+       - name: NEO4J_ACCEPT_LICENSE_AGREEMENT
+         value: "yes"
+      volumeMounts:
+       - name: volume-cluster
+         mountPath: /initdir
