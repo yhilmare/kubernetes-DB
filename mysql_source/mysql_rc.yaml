@@ -14,6 +14,8 @@ spec:
    labels:
     name: mysql-app
   spec:
+   nodeSelector:
+    neo_name: node4
    volumes:
     - name: mysql-pv-pod
       persistentVolumeClaim:
