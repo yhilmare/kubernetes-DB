@@ -1,3 +1,7 @@
 # kubernetes-DB
-This project is about an intergration of two databases
-<pre>./run.sh</pre>
+<h2>Introduction</h2>
+This project is about the intergation of two kinds of databases on kuberletes, mysql and neo4j respectively. The writter will tell you hwo to run these two databases on kuberletes without telling you how to run kuberletes, so that you need to install the kuberletes previously.<br/>
+This project contains two packages, "mysql_source" and "neo4j_source" respectively. The package "mysql_source" is about how to intergrate mysql into kuberletes, and the package "neo4j_source" does the same thing. Since the mysql is kind of a single point database, the intergration of mysql is very simple. The neo4j gets two editions, community edition and enterprise edition respectively, and the former edition is a kind of single point database, the latter is a distributted edition. The writter choosed the enterprise edition neo4j to build a distributted application on kuberletes. This will be quite complex, cause the way to building a cluster of neo4j needs to know the IP of every original neo4j node, and we can not choose a specific node to run neo4j for using kuberletes. Fortunately, we can solve the problem by constructing a new neo4j image based on the offical neo4j image, and I have published this new image named <code>nwpuyh/neo4j:enterprise</code> on my Docker Hub. You can run <code>docker pull nwpuyh/neo4j:enterprise</code> to use this image.
+<h2>How to run</h2>
+<li>Mysql</li>
+I love you
