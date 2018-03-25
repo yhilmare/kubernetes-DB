@@ -13,6 +13,7 @@ spec:
     name: neo4j-cs
     app: neo4j
   spec:
+   hostNetwork: true
    volumes:
     - name: volume-cluster
       hostPath:
@@ -21,8 +22,8 @@ spec:
     neo_name: node4
    containers:
     - name: neo4j-cs
-      image: ilmare/neo4j:enterprise
-      imagePullPolicy: Never
+      image: nwpuyh/neo4j:enterprise
+      imagePullPolicy: IfNotPresent
       ports:
        - containerPort: 7474
        - containerPort: 7473
@@ -32,7 +33,7 @@ spec:
        - containerPort: 7000
       env:
        - name: MY_NEO4J_INIT_MEMBER_LIST
-         value: "3"
+         value: "2"
        - name: NEO4J_ACCEPT_LICENSE_AGREEMENT
          value: "yes"
        - name: NEO4J_dbms_mode

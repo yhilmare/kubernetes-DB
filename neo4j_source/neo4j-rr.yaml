@@ -21,7 +21,7 @@ spec:
     neo_name: node4
    containers:
     - name: neo4j
-      image: ilmare/neo4j:enterprise
+      image: nwpuyh/neo4j:enterprise
       imagePullPolicy: IfNotPresent
       ports:
        - containerPort: 7474
@@ -34,7 +34,7 @@ spec:
        - name: NEO4J_dbms_mode
          value: "READ_REPLICA"
        - name: MY_NEO4J_INIT_MEMBER_LIST
-         value: "3"
+         value: "2"
        - name: NEO4J_ACCEPT_LICENSE_AGREEMENT
          value: "yes"
       volumeMounts:
