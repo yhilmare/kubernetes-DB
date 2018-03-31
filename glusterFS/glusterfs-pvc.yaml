@@ -1,0 +1,11 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+ name: gluster-pvc-yh
+spec:
+ storageClassName: gluster-yh
+ accessModes:
+  - ReadWriteMany
+ resources:
+  requests:
+    storage: 20Gi

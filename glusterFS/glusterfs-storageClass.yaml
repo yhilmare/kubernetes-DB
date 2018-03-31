@@ -1,0 +1,12 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+  name: gluster-yh
+  labels:
+    glusterfs: s3-sc
+    gluster-s3: sc
+provisioner: kubernetes.io/glusterfs
+parameters:
+  resturl: "http://10.107.31.73:8080"
+  restuser: "admin"
+  restauthenabled: "false"
