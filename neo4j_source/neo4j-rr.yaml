@@ -15,10 +15,8 @@ spec:
   spec:
    volumes:
     - name: volume-cluster
-      hostPath:
-       path: /home/yanghang/initdir
-   nodeSelector:
-    neo_name: node4
+      persistentVolumeClaim:
+       claimName: gluster-pvc-yh
    containers:
     - name: neo4j
       image: nwpuyh/neo4j:enterprise

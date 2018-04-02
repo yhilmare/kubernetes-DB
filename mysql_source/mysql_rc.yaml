@@ -17,7 +17,7 @@ spec:
    volumes:
     - name: mysql-pv-pod
       persistentVolumeClaim:
-       claimName: gluster-pvc-yh
+       claimName: mysql-pvc
    containers:
     - name: mysql
       image: mysql
