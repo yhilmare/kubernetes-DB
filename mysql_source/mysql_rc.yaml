@@ -14,14 +14,12 @@ spec:
    labels:
     name: mysql-app
   spec:
-   nodeSelector:
-    neo_name: node4
    volumes:
     - name: mysql-pv-pod
       persistentVolumeClaim:
-       claimName: pvc-mysql
+       claimName: gluster-pvc-yh
    containers:
-    - name: mysql-c
+    - name: mysql
       image: mysql
       imagePullPolicy: IfNotPresent
       env:
