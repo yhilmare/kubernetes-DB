@@ -13,10 +13,12 @@ spec:
     name: neo4j-rr
     app: neo4j
   spec:
+   nodeSelector:
+     neo4j: "correct"
    volumes:
     - name: volume-cluster
       persistentVolumeClaim:
-       claimName: gluster-pvc-yh
+       claimName: neo4j-pvc-host
    containers:
     - name: neo4j
       image: nwpuyh/neo4j:enterprise
