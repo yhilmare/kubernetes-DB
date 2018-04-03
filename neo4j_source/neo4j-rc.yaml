@@ -14,12 +14,11 @@ spec:
     name: neo4j-init-cs
     app: neo4j
   spec:
-   nodeSelector:
-    neo_name: node4
+   hostNetwork: true
    volumes:
     - name: "volume-cluster"
       persistentVolumeClaim:
-       claimName: gluster-pvc-yh
+       claimName: neo4j-pvc-host
    containers:
     - name: neo4j
       image: nwpuyh/neo4j:enterprise

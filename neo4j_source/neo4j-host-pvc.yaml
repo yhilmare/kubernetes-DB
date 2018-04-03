@@ -1,0 +1,11 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+ name: neo4j-pvc-host
+spec:
+ storageClassName: gluster-yh
+ accessModes:
+  - ReadWriteMany
+ resources:
+  requests:
+    storage: 1Gi
