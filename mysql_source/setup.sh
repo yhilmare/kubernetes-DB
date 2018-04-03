@@ -30,6 +30,16 @@ if [ -e ${svc} -a -e ${rc} -a -e ${pvc} ]; then
   if [ ${#var[0]} == 0 ]; then
     echo `date`"[INFO] - there is no pvc like "\"${param_pvc}\"", need to create new one;"
     echo `date`"[INFO] - "`kubectl create -f ${pvc}`
+    while :; do
+      sleep 2
+      echo `date` "[INFO] - waiting for pvc \"${param_pvc}\" bounding..."
+      tmp=`kubectl get pvc ${param_pvc} | grep Bound`
+      if [ ${#tmp[0]} != 0 ]; then
+        echo `date` "[INFO] - the pvc named \"${param_pvc}\" has been bounded."
+        break
+      fi
+    done
+    unset tmp
   else
     echo `date`"[WARNING] - there is already a pvc, no need to create a new one;"
     echo `date`"[WARNING] - "${var[0]}

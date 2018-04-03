@@ -45,7 +45,7 @@ if [ -e ${host_pvc} -a -e ${rc} ]; then
   returnMat=`kubectl get pvc | grep ${param_pvc_host}`
   if [ ${#returnMat[0]} == 0 ]; then
     echo `date` "[INFO] - there is not a pvc named \"${param_pvc_host}\", create a new one."
-    echo `date` "[INFO] - "`kubectl create -f neo4j-host-pvc.yaml`
+    echo `date` "[INFO] - "`kubectl create -f ${host_pvc}`
     while :; do
       sleep 2
       echo `date` "[INFO] - waiting for pvc \"${param_pvc_host}\" bounding..."
@@ -62,7 +62,7 @@ if [ -e ${host_pvc} -a -e ${rc} ]; then
   returnMat=`kubectl get rc | grep ${param_rc}`
   if [ ${#returnMat[0]} == 0 ]; then
     echo `date` "[INFO] - there is not a replicationcontroller named \"${param_rc}\", need to create one..."
-    echo `date` "[INFO] - "`kubectl create -f neo4j-rc.yaml`
+    echo `date` "[INFO] - "`kubectl create -f ${rc}`
   else
     echo `date` "[WARNING] - there is a deprecated replicationcontroller named \"${param_rc}\", it may result in a invalid cluster!"
   fi
