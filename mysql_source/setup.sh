@@ -13,9 +13,11 @@ param_pvc=${3}
 if [ -z ${param_rc} ]; then
   param_rc="mysql-rc"
 fi
+
 if [ -z ${param_svc} ]; then
   param_svc="mysql-svc"
 fi
+
 if [ -z ${param_pvc} ]; then
   param_pvc="mysql-pvc"
 fi
@@ -64,4 +66,5 @@ if [ -e ${svc} -a -e ${rc} -a -e ${pvc} ]; then
 else
   echo `date`"[ERROR] - can not find enough yaml files!"
 fi
+
 unset rc svc pvc param_rc param_svc param_pvc
