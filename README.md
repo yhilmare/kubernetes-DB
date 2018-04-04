@@ -5,8 +5,8 @@
 <p>The neo4j has two editions, community edition and enterprise edition respectively, and the former edition is a kind of single point database, the latter is a distributted edition. The writter choosed the enterprise edition neo4j to build a distributted application on kubernetes. This will be quite complex, because the way to building a cluster of neo4j needs to know the IP of every original neo4j instance, but we can not choose a specific node to run neo4j for using kubernetes. Fortunately, we can solve this problem by constructing a new neo4j image based on the official neo4j image, and I have constructed and published this new image named <code>nwpuyh/neo4j:enterprise</code> on my Docker Hub. You can run <code>docker pull nwpuyh/neo4j:enterprise</code> to use this image.</p>
 <h2>How to run</h2>
 <h3>Mysql</h3>
-<p>There are two ways to intergrate mysql into kubernetes, the one is constructing automatically and the other is constructing manually. The writter will introduce the automatical way first. You will find out that there is a shell named <code>run.sh</code>. You can do this simply.</p>
-<pre>./run.sh</pre>
+<p>There are two ways to intergrate mysql into kubernetes, the one is constructing automatically and the other is constructing manually. The writter will introduce the automatical way first. You will find out that there is a shell named <code>setup.sh</code>. You can do this simply.</p>
+<pre>./setup.sh</pre>
 <p>This shell will check if your cluster contains any ReplicationController, Pod or Service named like "mysql". If so, the shell will not create a new one, otherwise the shell will create a new one for you. You can run <code>kubectl get po -o wide</code> to check if the shell run correctly. You will see this if there are not any mistakes.</p>
 <pre>
 NAME                   READY         STATUS           RESTARTS    AGE       IP               NODE
@@ -14,7 +14,6 @@ mysql-rc-79q97         1/1           Running          0           1d        10.2
 </pre>
 <p>You can also choose to build application manually if you want to get more details. You can execute these codes sequentially.</p>
 <pre>
-kubectl create -f mysql_pv.yaml
 kubectl create -f mysql_pvc.yaml
 kubectl create -f mysql_rc.yaml
 kubectl create -f mysql_svc.yaml
@@ -35,8 +34,13 @@ env:
     - name: NEO4J_dbms_connectors_default__advertised__address
     - name: NEO4J_ACCEPT_LICENSE_AGREEMENT
 </pre>
-<p>There are eight environment variables above, and we can only determine few of them before such as <code>NEO4J_dbms_mode</code>, <code>NEO4J_causal__clustering_expected__core__cluster__size</code> and <code>NEO4J_ACCEPT_LICENSE_AGREEMENT</code>. We can not determine the remaining variables before we run the neo4j instance, but we actually need to know them before we run the neo4j instance. This conflict requires us to use a new image. This kind of new image is built based on the official edition. The detail of this image has been described in another <a href="https://github.com/yhswjtuILMARE/kubernetes-DB/blob/master/neo4j_source/README.md">README.md</a>. You can construct a neo4j causal cluster by executing these commands.</p>
+<p>There are eight environment variables above, and we can only determine few of them before such as <code>NEO4J_dbms_mode</code>, <code>NEO4J_causal__clustering_expected__core__cluster__size</code> and <code>NEO4J_ACCEPT_LICENSE_AGREEMENT</code>. We can not determine the remaining variables before we run the neo4j instance, but we actually need to know them before we run the neo4j instance. This conflict requires us to use a new image. This kind of new image is built based on the official edition. The detail of this image has been described in another <a href="https://github.com/yhswjtuILMARE/kubernetes-DB/blob/master/neo4j_source/README.md">README.md</a>. You can construct a neo4j cluster automatically by executing such a shell script <code>setup.sh</code></p>
 <pre>
+./setup.sh
+</pre>
+<p>You can construct a neo4j causal cluster manually by executing these commands.</p>
+<pre>
+kubectl create -f neo4j-host-pvc.yaml
 kubectl create -f neo4j-rc.yaml
 kubectl create -f neo4j-cs.yaml
 kubectl create -f neo4j-rr.yaml
