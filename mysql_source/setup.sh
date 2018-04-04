@@ -1,4 +1,5 @@
 #!/bin/bash
+
 rc=${PWD}/mysql_rc.yaml
 svc=${PWD}/mysql_svc.yaml
 pvc=${PWD}/mysql_pvc.yaml
