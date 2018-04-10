@@ -20,7 +20,7 @@ spec:
    volumes:
     - name: "volume-cluster"
       persistentVolumeClaim:
-       claimName: neo4j-pvc-host
+       claimName: neo4j-pvc
    containers:
     - name: neo4j
       image: nwpuyh/neo4j:enterprise

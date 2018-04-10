@@ -2,12 +2,13 @@
 
 volumeDir="/initdir/"
 volumeFile="hosts.data"
-
+uuid=`cat /proc/sys/kernel/random/uuid`
+volumePath="/initdir/${uuid}/"
 #检查挂载文件卷的位置是否存在，若不存在则创建目录
 
 if [ ! -e ${volumeDir} ]; then
   mkdir -p ${volumeDir}
-  echo `date` "[INFO] - volume dir has been created, dir is "${volumeDir}"."
+  echo `date` "[INFO] - volume dir has been created, dir is ${volumeDir}".
 fi
 
 #检测目标主机文件是否存在，若不存在则创建该文件
@@ -100,5 +101,23 @@ export NEO4J_causal__clustering_transaction__advertised__address=${ipAddress}:60
 export NEO4J_causal__clustering_raft__advertised__address=${ipAddress}:7000
 export NEO4J_dbms_connectors_default__advertised__address=${ipAddress}
 
+if [ ! -e ${volumePath} ]; then
+  mkdir -p ${volumePath}
+  echo `date` "[INFO] - volume path has been created, dir is ${volumePath}."
+fi
+
+ln -s /var/lib/neo4j/data/ ${volumePath}data
+
+echo `date` "[INFO] - data volume has been created, dir is ${volumePath}data."
+
+ln -s /var/lib/neo4j/logs/ ${volumePath}logs
+
+echo `date` "[INFO] - logs volume path has been created, dir is ${volumePath}logs."
+
+ln -s /var/lib/neo4j/conf/ ${volumePath}conf
+
+echo `date` "[INFO] - conf volume path has been created, dir is ${volumePath}conf."
+
 echo `date` "[INFO] - \"run.sh\" completed."
+
 /docker-entrypoint.sh ${1}

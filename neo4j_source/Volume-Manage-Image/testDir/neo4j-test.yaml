@@ -1,26 +1,27 @@
 kind: ReplicationController
 apiVersion: v1
 metadata:
- name: neo4j-cs-rc
+ name: neo4j-rc
+ labels:
+  type: cs-rc
 spec:
- replicas: 1
+ replicas: 2
  selector:
-  name: neo4j-cs
+  name: neo4j-init-cs
  template:
   metadata:
-   name: neo4j-cs
    labels:
-    name: neo4j-cs
+    name: neo4j-init-cs
     app: neo4j
   spec:
    nodeSelector:
-    neo4j: correct
+     neo_name: node4
    volumes:
-    - name: volume-cluster
+    - name: "volume-cluster"
       persistentVolumeClaim:
-       claimName: neo4j-pvc
+       claimName: neo4j-pvc-host
    containers:
-    - name: neo4j-cs
+    - name: neo4j
       image: nwpuyh/neo4j:enterprise
       imagePullPolicy: IfNotPresent
       ports:
@@ -31,12 +32,12 @@ spec:
        - containerPort: 6000
        - containerPort: 7000
       env:
-       - name: MY_NEO4J_INIT_MEMBER_LIST
+       - name: NEO4J_dbms_mode
+         value: "CORE"
+       - name: NEO4J_causal__clustering_expected__core__cluster__size
          value: "2"
        - name: NEO4J_ACCEPT_LICENSE_AGREEMENT
          value: "yes"
-       - name: NEO4J_dbms_mode
-         value: "CORE"
       volumeMounts:
-       - name: volume-cluster
-         mountPath: /initdir
+       - name: "volume-cluster"
+         mountPath: "/initdir"

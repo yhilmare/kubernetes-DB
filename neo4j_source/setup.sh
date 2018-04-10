@@ -3,7 +3,7 @@
 #-------------------------------------
 #设定yaml文件的地址
 #-------------------------------------
-host_pvc=${PWD}/neo4j-host-pvc.yaml
+host_pvc=${PWD}/neo4j-pvc.yaml
 rc=${PWD}/neo4j-rc.yaml
 #-------------------------------------
 #设定rc对象和pvc的名称
@@ -14,7 +14,7 @@ param_rc=${2}
 #若用户没有传递这两个名称则使用默认值
 #------------------------------------
 if [ -z ${param_pvc_host} ]; then
-  param_pvc_host="neo4j-pvc-host"
+  param_pvc_host="neo4j-pvc"
 fi
 
 if [ -z ${param_rc} ]; then
