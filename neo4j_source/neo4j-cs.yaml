@@ -21,7 +21,7 @@ spec:
        claimName: neo4j-pvc
    containers:
     - name: neo4j-cs
-      image: nwpuyh/neo4j:enterprise
+      image: 172.19.0.131:5000/neo4j:enterprise
       imagePullPolicy: IfNotPresent
       ports:
        - containerPort: 7474
