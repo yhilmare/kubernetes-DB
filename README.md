@@ -12,7 +12,7 @@
 NAME                   READY         STATUS           RESTARTS    AGE       IP               NODE
 mysql-rc-79q97         1/1           Running          0           1d        10.244.202.31    lab4
 </pre>
-<p>You can also choose to build application manually if you want to get more details. You can execute these codes sequentially.</p>
+<p>You can also choose to build application manually if you want to know more details. You can execute these codes sequentially.</p>
 <pre>
 kubectl create -f mysql_pvc.yaml
 kubectl create -f mysql_rc.yaml
