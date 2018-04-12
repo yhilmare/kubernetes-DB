@@ -10,4 +10,4 @@ image.</p>
 <pre>
 docker pull nwpuyh/neo4j:enterprise
 </pre>
-<p>That is what I did about this project, and please contact me If there are any problems I did not note clearly.</p>
+<p>That is what I did about this project, and please contact me If there are any problems I did not note clearly. I have connected neo4j's storage to glusterfs.</p>
