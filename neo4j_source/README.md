@@ -2,8 +2,7 @@
 
 ## Introduction
 
-The writter has described how to build a neo4j cluster in another [README.md](https://github.com/yhswjtuILMARE/kubernetes-DB
-/blob/master/README.md). The writter does not prepare to note it again. I want to note more details about the new 
+The writter has described how to build a neo4j cluster in another [README.md](https://github.com/yhswjtuILMARE/kubernetes-DB/blob/master/README.md). The writter does not prepare to note it again. I want to note more details about the new 
 image.
 
 As the writter describe in another README.md, the neo4j cluster need at least eight environment variables to build a cluster, and five of them can not be determined begore. These environment variables involve the IP address of the cluster. Well, we can specify the node that the neo4j instances run so that we can obtain the ip address of each node in the cluster. This kind of method goes against the design idea of kubernetes. We have to think out another method to solve this problem to let kubernetes schedule neo4j instances automatically without setting any variables manually. Creating a new neo4j image is such a suitable solution.
