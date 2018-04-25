@@ -35,7 +35,7 @@ You will see the same info when you execute the code <code>kubectl get po -o wid
 
 ### neo4j
 
-The way to constructing neo4j is quite complex, because the neo4j is a kind of distributed database. We have to consider how to build a neo4j cluster. There is an official solution given by neo4j official. You can [click here](https://neo4j.com/docs/operations-manual/current/installation/docker/)"> to know more.
+The way to constructing neo4j is quite complex, because the neo4j is a kind of distributed database. We have to consider how to build a neo4j cluster. There is an official solution given by neo4j official. You can [click here](https://neo4j.com/docs/operations-manual/current/installation/docker/) to know more.
 
 We can know that we have to give a specific number of the instance in the cluster, and we have to determine the IP of every initial neo4j instance in cluster by environment variables from the URL given above. This requirment is difficult to meet in the kubernetes context, since the kubernetes will choose the suitable node to run neo4j instance automaticlly. We do not know which node will be choosen before so that we can not know the IP that the neo4j needs previously. We can build a new neo4j image to solve this problem.
 
