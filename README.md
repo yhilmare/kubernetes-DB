@@ -1,7 +1,5 @@
 # Kubernetes-DB
 
-[TOC]
-
 ## Introduction
 This project is about the intergation of two kinds of databases on kubernetes, mysql and neo4j respectively. The writter will tell you how to run these two databases on kubernetes without telling you how to run kubernetes, so that you need to install the kubernetes previously.
 
