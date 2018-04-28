@@ -80,7 +80,8 @@ neo4j-rr-rc-54hzf         1/1           Running            0          7h        
 ```
 
 As you can see, we have already got four neo4j instances. Neo4j provides us a web interface to manage the cluster, we can login this web site if we belong to the same local network with the cluster. We can type `http://yourIP:7474` in your browser to visit this web application. We can monitor our cluster's status in this web application.
-<img src="https://github.com/yhswjtuILMARE/kubernetes-DB/blob/master/images/neo4j_cluster_status.jpg"/>
+
+![neo4j cluster](https://github.com/yhswjtuILMARE/kubernetes-DB/blob/master/images/neo4j_cluster_status.jpg)
 
 As you can see in the picture, we got a casual cluster containing five neo4j instances, and every instance's role can be find in the picture. You can execute command `kubectl scale rc neo4j-cs/neo4j-rr --replicas=***` to scale the size of your cluster. We just build an original cluster so far, and you can realize a `service` object to make the cluster stronger. You can achieve this goal by doing this:
 
