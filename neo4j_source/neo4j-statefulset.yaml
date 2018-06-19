@@ -42,7 +42,7 @@ spec:
     - metadata:
         name: neo4j-pvc
         annotations:
-          volume.beta.kubernetes.io/storage-class: ""
+          volume.beta.kubernetes.io/storage-class: "gluster-presentation"
       spec:
         accessModes: ["ReadWriteOnce"]
         resources:
