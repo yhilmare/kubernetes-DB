@@ -1,0 +1,24 @@
+# Headless service that allows us to get the IP addresses of our Cassandra nodes
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: neo4j-peer-svc
+  name: neo4j-peer-svc
+spec:
+  clusterIP: None
+  ports:
+    - port: 7474
+      name: neo4j-port-1
+    - port: 7473
+      name: neo4j-port-2
+    - port: 7687
+      name: neo4j-port-3
+    - port: 5000
+      name: neo4j-port-4
+    - port: 6000
+      name: neo4j-port-5
+    - port: 7000
+      name: neo4j-port-6
+  selector:
+    app: neo4j

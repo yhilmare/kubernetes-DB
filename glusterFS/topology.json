@@ -15,7 +15,7 @@
             "zone": 1
           },
           "devices": [
-            "/dev/sdb"
+            "/dev/sdb1"
           ]
         },
         {

@@ -1,0 +1,37 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  labels:
+    name: neo4j-ss
+  name: neo4j-ss
+spec:
+  serviceName: neo4j-peer-svc
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        name: neo4j-init-cs
+        app: neo4j
+    spec:
+      containers:
+        - name: neo4j
+          image: 172.19.0.131:5000/neo4j:enterprise
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 7474
+            - containerPort: 7473
+            - containerPort: 7687
+            - containerPort: 5000
+            - containerPort: 6000
+            - containerPort: 7000
+          env:
+            - name: PRESENT_NAME
+              value: neo4j-ss
+            - name: PEER_DISCOVERY_SERVICE
+              value: neo4j-peer-svc
+            - name: NEO4J_dbms_mode
+              value: "CORE"
+            - name: NEO4J_causal__clustering_expected__core__cluster__size
+              value: "3"
+            - name: NEO4J_ACCEPT_LICENSE_AGREEMENT
+              value: "yes"

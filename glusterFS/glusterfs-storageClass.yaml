@@ -7,6 +7,6 @@ metadata:
     gluster-s3: sc
 provisioner: kubernetes.io/glusterfs
 parameters:
-  resturl: "http://10.107.31.73:8080"
+  resturl: "http://10.107.249.138:8080"
   restuser: "admin"
   restauthenabled: "false"
