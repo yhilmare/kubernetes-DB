@@ -1,8 +1,8 @@
 #!/bin/bash
 
-rc=${PWD}/mysql_rc.yaml
-svc=${PWD}/mysql_svc.yaml
-pvc=${PWD}/mysql_pvc.yaml
+rc=${PWD}/mysql.yaml
+svc=${PWD}/mysql-svc.yaml
+pvc=${PWD}/mysql-pvc.yaml
 param_rc=${1}
 param_svc=${2}
 param_pvc=${3}
@@ -12,7 +12,7 @@ param_pvc=${3}
 #赋值mysql
 #---------------------------------------------------------
 if [ -z ${param_rc} ]; then
-  param_rc="mysql-rc"
+  param_rc="mysql"
 fi
 
 if [ -z ${param_svc} ]; then
@@ -47,12 +47,12 @@ if [ -e ${svc} -a -e ${rc} -a -e ${pvc} ]; then
     echo `date`"[WARNING] - there is already a pvc, no need to create a new one;"
     echo `date`"[WARNING] - "${var[0]}
   fi
-  var=`kubectl get rc | grep ${param_rc}`
+  var=`kubectl get po | grep ${param_rc}`
   if [ ${#var[0]} == 0 ]; then
-    echo `date`"[INFO] - there is no replicationcontroller like "\"${param_rc}\"", need to create new one;"
+    echo `date`"[INFO] - there is no pod like "\"${param_rc}\"", need to create new one;"
     echo `date`"[INFO] - "`kubectl create -f ${rc}`
   else
-    echo `date`"[WARNING] - there is already a replicationcontroller, no need to create a new one;"
+    echo `date`"[WARNING] - there is already a pod, no need to create a new one;"
     echo `date`"[WARNING] - "${var[0]}
   fi
   var=`kubectl get svc | grep ${param_svc}`
