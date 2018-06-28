@@ -9,4 +9,4 @@ spec:
   scaleTargetRef:
     kind: statefulset
     name: neo4j-ss
-  targetCPUUtilizationPercentage: 90
+  targetCPUUtilizationPercentage: 10

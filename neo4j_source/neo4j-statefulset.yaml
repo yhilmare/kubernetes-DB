@@ -24,6 +24,13 @@ spec:
             - containerPort: 5000
             - containerPort: 6000
             - containerPort: 7000
+          resources:
+            limits:
+              cpu: 500m
+              memory: 2048Mi
+            requests:
+              cpu: 200m
+              memory: 1024Mi
           env:
             - name: PRESENT_NAME
               value: neo4j-ss
