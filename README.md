@@ -21,15 +21,15 @@ This shell will check if your cluster contains any ReplicationController, Pod or
 
 ```
 NAME                   READY         STATUS           RESTARTS    AGE       IP               NODE
-mysql-rc-79q97         1/1           Running          0           1d        10.244.202.31    lab4
+mysql                  1/1           Running          0           1d        10.244.202.31    lab4
 ```
 
 You can also choose to build application manually if you want to know more details. You can execute these codes sequentially.
 
 ```
-kubectl create -f mysql_pvc.yaml
-kubectl create -f mysql_rc.yaml
-kubectl create -f mysql_svc.yaml
+kubectl create -f mysql-pvc.yaml
+kubectl create -f mysql-server.yaml
+kubectl create -f mysql-svc.yaml
 ```
 
 You will see the same info when you execute the code <code>kubectl get po -o wide</code> if there are not any misktakes.
@@ -54,29 +54,22 @@ env:
     - name: NEO4J_ACCEPT_LICENSE_AGREEMENT
 ```
 
-There are eight environment variables above, and we can only determine few of them before such as `NEO4J_dbms_mode`, `NEO4J_causal__clustering_expected__core__cluster__size` and `NEO4J_ACCEPT_LICENSE_AGREEMENT`. We can not determine the remaining variables before we run the neo4j instance, but we actually need to know them before we run the neo4j instance. This conflict requires us to use a new image. This kind of new image is built based on the official edition. The detail of this image has been described in another [README.md](https://github.com/yhswjtuILMARE/kubernetes-DB/blob/master/neo4j_source/README.md). You can construct a neo4j cluster automatically by executing such a shell script `setup.sh`
-
-```
-./setup.sh
-```
+There are eight environment variables above, and we can only determine few of them before such as `NEO4J_dbms_mode`, `NEO4J_causal__clustering_expected__core__cluster__size` and `NEO4J_ACCEPT_LICENSE_AGREEMENT`. We can not determine the remaining variables before we run the neo4j instance, but we actually need to know them before we run the neo4j instance. This conflict requires us to use a new image. This kind of new image is built based on the official edition. The detail of this image has been described in another [README.md](https://github.com/yhswjtuILMARE/kubernetes-DB/blob/master/neo4j_source/README.md). 
 
 You can construct a neo4j causal cluster manually by executing these commands.
 
 ```
-kubectl create -f neo4j-host-pvc.yaml
-kubectl create -f neo4j-rc.yaml
-kubectl create -f neo4j-cs.yaml
-kubectl create -f neo4j-rr.yaml
+kubectl create -f neo4j-peer-svc.yaml
+kubectl create -f neo4j-statefulset.yaml
 ```
 
 You get a neo4j casual cluster containing one master node, two core-server slave nodes and one read-replica slave node now. The first command is required, and you can choose whether to execute the following two commands. You can see these info by executing this command `kubectl get po -o wide`, if there are not any misktakes.
 
 ```
 NAME                      READY         STATUS             RESTARTS   AGE       IP               NODE
-neo4j-cs-rc-smq8q         1/1           Running            0          7h        172.19.0.134     lab4
-neo4j-rc-l9bhm            1/1           Running            0          7h        10.244.202.14    lab4
-neo4j-rc-znq5z            1/1           Running            0          7h        10.244.202.17    lab4
-neo4j-rr-rc-54hzf         1/1           Running            0          7h        10.244.202.15    lab4
+neo4j-ss-0                1/1           Running            0          7h        172.19.0.134     lab4
+neo4j-ss-1                1/1           Running            0          7h        10.244.202.14    lab4
+neo4j-ss-2                1/1           Running            0          7h        10.244.202.17    lab4
 ```
 
 As you can see, we have already got four neo4j instances. Neo4j provides us a web interface to manage the cluster, we can login this web site if we belong to the same local network with the cluster. We can type `http://yourIP:7474` in your browser to visit this web application. We can monitor our cluster's status in this web application.
