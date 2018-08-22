@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<neo4jMbean>
+	<mbean
+		name="org.neo4j:instance=kernel#0,name=Store sizes">
+		<metric>
+			<name>TotalStoreSize</name>
+			<value>TotalStoreSize</value>
+		</metric>
+	</mbean>
+	<mbean
+		name="org.neo4j:instance=kernel#0,name=Primitive count">
+		<metric>
+			<name>NumberOfNodeIdsInUse</name>
+			<value>NumberOfNodeIdsInUse</value>
+		</metric>
+	</mbean>
+	<mbean
+		name="org.neo4j:instance=kernel#0,name=Transactions">
+		<metric>
+			<name>PeakNumberOfConcurrentTransactions</name>
+			<value>PeakNumberOfConcurrentTransactions</value>
+		</metric>
+	</mbean>
+	<mbean
+		name="org.neo4j:instance=kernel#0,name=Transactions">
+		<metric>
+			<name>NumberOfOpenTransactions</name>
+			<value>NumberOfOpenTransactions</value>
+		</metric>
+	</mbean>
+	<mbean
+		name="org.neo4j:instance=kernel#0,name=Transactions">
+		<metric>
+			<name>NumberOfOpenedTransactions</name>
+			<value>NumberOfOpenedTransactions</value>
+		</metric>
+	</mbean>
+	<mbean
+		name="org.neo4j:instance=kernel#0,name=Page cache">
+		<metric>
+			<name>Faults</name>
+			<value>Faults</value>
+		</metric>
+	</mbean>
+	<mbean
+		name="org.neo4j:instance=kernel#0,name=Page cache">
+		<metric>
+			<name>EvictionExceptions</name>
+			<value>EvictionExceptions</value>
+		</metric>
+	</mbean>
+</neo4jMbean>

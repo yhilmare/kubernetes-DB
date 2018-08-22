@@ -18,13 +18,15 @@ RUN curl --fail --silent --show-error --location --remote-name ${NEO4J_URI} \
     && rm ${NEO4J_TARBALL} \
     && mv /var/lib/neo4j/data /data \
     && ln -s /data /var/lib/neo4j/data \
-    && apk del curl
+    && apk del curl 
 
 ENV PATH /var/lib/neo4j/bin:$PATH
 
 WORKDIR /var/lib/neo4j
 
 VOLUME /data
+
+RUN mkdir -p /conf 
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 
@@ -34,7 +36,9 @@ RUN mkdir -p /var/lib/neo4j/java
 
 COPY ./java /var/lib/neo4j/java
 
-EXPOSE 7474 7473 7687
+COPY ./neo4jAgent-0.0.1-jar-with-dependencies.jar /
+
+EXPOSE 3637 7474 7473 7687
 
 ENTRYPOINT ["/startup.sh"]
 

@@ -13,11 +13,16 @@ spec:
         name: neo4j-init-cs
         app: neo4j
     spec:
+      volumes:
+         - name: conf-volume
+           hostPath:
+             path: "/home/yanghang/source/database/neo4j_source/conf"
       containers:
         - name: neo4j
-          image: 172.19.0.131:5000/neo4j:enterprise
+          image: 172.19.0.131:5000/neo4j:v9
           imagePullPolicy: IfNotPresent
           ports:
+            - containerPort: 3637
             - containerPort: 7474
             - containerPort: 7473
             - containerPort: 7687
@@ -45,6 +50,8 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/neo4j/data
               name: neo4j-pvc
+            - mountPath: /conf
+              name: conf-volume
   volumeClaimTemplates:
     - metadata:
         name: neo4j-pvc
