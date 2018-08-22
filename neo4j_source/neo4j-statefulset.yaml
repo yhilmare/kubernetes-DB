@@ -12,6 +12,7 @@ spec:
       labels:
         name: neo4j-init-cs
         app: neo4j
+        role: slave
     spec:
       volumes:
          - name: conf-volume
