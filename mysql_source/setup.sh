@@ -1,6 +1,6 @@
 #!/bin/bash
 
-rc=${PWD}/mysql.yaml
+rc=${PWD}/mysql-server.yaml
 svc=${PWD}/mysql-svc.yaml
 pvc=${PWD}/mysql-pvc.yaml
 param_rc=${1}
